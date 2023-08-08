@@ -1,4 +1,7 @@
+from _decimal import Decimal
+
 from django.conf import settings
+from myshop.shop.models import Product
 
 
 class Cart:
@@ -32,3 +35,45 @@ class Cart:
     def save(self):
         # 세션이 '수정됨'으로 표시되도록 설정하여 저장되도록
         self.session.modified = True
+
+    def remove(self, product):
+        """
+        장바구니에서 제품을 제거합니다.
+        """
+        product_id = str(product.id)
+        if product_id in self.cart:
+            del self.cart[product_id]
+            self.save()
+
+    def __iter__(self):
+        # 장바구니에 있는 항목 id 리스트
+        product_ids = self.cart.keys()
+        # 장바구니에 있는 항목을 Product 에서 가져오기
+        products = Product.objects.filter(id__in=product_ids)
+        cart = self.cart.copy()
+
+        for product in products:
+            cart[str(product.id)]['product'] = product
+
+        for item in cart.values():
+            item['price'] = Decimal(item['price'])
+            item['total_price'] = item['price'] * item['quantity']
+            yield item
+
+
+
+    def __len__(self):
+        """
+        장바구니에 있는 모든 항목을 세어 반환
+        :return:
+        """
+        return sum(item['quantity'] for item in self.cart.values())
+
+    def get_total_price(self):
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+
+    def clear(self):
+        #세션에서 장바구니 제거
+        del self.session[settings.CART_SESSION_ID]
+        self.save()
+
