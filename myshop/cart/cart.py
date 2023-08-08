@@ -23,9 +23,12 @@ class Cart:
         제품을 장바구니에 추가하거나 수량을 업데이트
         """
         product_id = str(product.id)
+
+        # 장바구니에 해당 상품이 없다면, 추가해주기 (qunatity = 0 으로 초기화)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity':0,
                                      'price': str(product.price)}
+        # override
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
 
