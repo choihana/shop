@@ -1,6 +1,5 @@
 from django.urls import path
-
-from myshop.cart import views
+from cart import views
 
 app_name='cart'
 urlpatterns= [
