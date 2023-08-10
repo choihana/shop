@@ -33,6 +33,7 @@ class Cart:
 
         else:
             self.cart[product_id]['quantity'] += quantity
+        self.save()
 
     def save(self):
         # 세션이 '수정됨'으로 표시되도록 설정하여 저장되도록
