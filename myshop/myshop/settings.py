@@ -133,3 +133,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 CART_SESSION_ID = 'cart'
+
+# Stripe 설정
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51NepGGEs4sFud7QOVD2MqBQlAOPYcLeOu1wdrK2astF90darE7Pev7V5ujfbaQNgQ0RZOUKe3oxU6B15koEeNYtv00dxHd6rzp' # Publishable key
+STRIPE_SECRET_KEY = 'sk_test_51NepGGEs4sFud7QOcvhwOmPQbXeSom8J8vHeUU81pcTxZV6pfvSGsyY03hYnR9USHjZEJXTjbcVOQ7k7yZ0n6jNO00ST8Yw9lI' # Secret key
+STRIPE_API_VERSION = '2023-08-14'
