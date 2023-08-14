@@ -1,3 +1,5 @@
+from _decimal import Decimal
+
 import stripe
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
@@ -26,7 +28,26 @@ def payment_process(request):
             'cancel_url': cancel_url,
             'line_items': [] #A list of items the customer is purchasing
         }
+        # 주문 항목을 stripe checkout 세션에 추가
+        for item in order.items.all():
+            session_data['line_items'].append({
+                'price_data': {
+                    'unit_amount': int(item.price * Decimal('100')),
+                    'currency':'usd',
+                    'product_data':{
+                        'name':item.product.name,
+                    },
+                },
+
+                'quantity': item.quantity,
+            })
         # create stripe checkout session
         session = stripe.checkout.Session.create(**session_data)
         return redirect(session.url, code =303)
     return render(request, 'payment/process.html', locals())
+
+def payment_completed(request):
+    return render(request, 'payment/completed.html')
+
+def payment_canceled(request):
+    return render(request, 'payment/canceled.html')
