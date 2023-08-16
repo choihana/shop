@@ -33,6 +33,9 @@ def stripe_webhook(request):
             except Order.DoesNotExist:
                 return HttpResponse(status = 404)
             order.paid = True
+            # 결제 완료 시, 결제 인텐트 ID 저장
+            order.stripe_id = session.payment_intent
             order.save()
+
     # success
     return HttpResponse(status =200)
