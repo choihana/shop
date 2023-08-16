@@ -41,6 +41,7 @@ def export_to_csv(modeladmin, request, queryset):
 
         writer.writerow(data_row)
     return response
+# 관리자 사이트 드롭다운에서 보여지는 텍스트
 export_to_csv.short_description = 'Export to CSV'
 
 
