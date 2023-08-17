@@ -29,6 +29,7 @@ class Cart:
                     return Coupon.objects.get(id = self.coupon_id)
                 except Coupon.DeseNotExist:
                     pass
+            # 쿠폰 없는 경우 None 반환
             return None
 
         # 카트에 쿠폰이 포함된 경우 할인할 금액을 반환
