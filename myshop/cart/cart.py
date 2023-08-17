@@ -1,5 +1,5 @@
 from decimal import Decimal
-from django.conf import settings
+from myshop import settings
 from shop.models import Product
 from coupons.models import Coupon
 
@@ -22,27 +22,6 @@ class Cart:
         self.coupon_id = self.session.get('coupon_id')
 
         # 해당 값을 Cart 객체에 저장
-        @property
-        def coupon(self):
-            if self.coupon_id:
-                try:
-                    return Coupon.objects.get(id = self.coupon_id)
-                except Coupon.DeseNotExist:
-                    pass
-            # 쿠폰 없는 경우 None 반환
-            return None
-
-        # 카트에 쿠폰이 포함된 경우 할인할 금액을 반환
-        def get_discount(self):
-            if self.coupon:
-                return (self.coupon.discount / Decimal(100)) \
-                        * self.get_total_price()
-            return Decimal(0)
-
-        # 전체 가격에서 할인가격 빼서 반환
-        def get_total_price_after_discount(self):
-            return self.get_total_price() - self.get_discount
-
 
     def add(self,product, quantity = 1 , override_quantity = False):
         """
@@ -106,4 +85,25 @@ class Cart:
         #세션에서 장바구니 제거
         del self.session[settings.CART_SESSION_ID]
         self.save()
+
+    @property
+    def coupon(self):
+        if self.coupon_id:
+            try:
+                return Coupon.objects.get(id=self.coupon_id)
+            except Coupon.DeseNotExist:
+                pass
+        # 쿠폰 없는 경우 None 반환
+        return None
+
+    # 카트에 쿠폰이 포함된 경우 할인할 금액을 반환
+    def get_discount(self):
+        if self.coupon:
+            return (self.coupon.discount / Decimal(100)) \
+                        * self.get_total_price()
+        return Decimal(0)
+
+        # 전체 가격에서 할인가격 빼서 반환
+    def get_total_price_after_discount(self):
+        return self.get_total_price() - self.get_discount()
 
