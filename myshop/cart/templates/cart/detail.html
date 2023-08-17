@@ -49,7 +49,7 @@
                 </tr>
             {% endwith %}
         {% endfor %}
-
+    {% if cart.coupon %}
             <tr class="subtotal">
                 <td>Subtotal</td>
                 <td colspan="4"></td>
@@ -62,7 +62,7 @@
                 - $ {{cart.get_discount|floatformat:2}}
             </td>
         </tr>
-
+    {% endif %}
         <tr class="total">
             <td>Total</td>
             <td colspan="4"></td>

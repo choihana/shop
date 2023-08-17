@@ -21,7 +21,7 @@ class Cart:
         # 현재 세션에서 coupon_id 가져옴
         self.coupon_id = self.session.get('coupon_id')
 
-        # 해당 값을 Cart 객체에 저장
+
 
     def add(self,product, quantity = 1 , override_quantity = False):
         """
