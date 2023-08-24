@@ -11,7 +11,14 @@
 </head>
 <body>
     <div id="header">
+
         <a href="/" class="logo">My shop</a>
+
+    {% if request.user.is_authenticated %}
+    {{request.user}}님 <a href="{% url 'account:logout' %}"> logout</a>
+    {% else %}
+    <a href="{% url 'account:login' %}">login</a>
+    {% endif  %}
     </div>
     <div id="subheader">
         <div class="cart">

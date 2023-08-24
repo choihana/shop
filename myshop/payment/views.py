@@ -41,10 +41,20 @@ def payment_process(request):
 
                 'quantity': item.quantity,
             })
+        # coupon apply
+        if order.coupon:
+            stripe_coupon = stripe.Coupon.create(
+                name= order.coupon.code,
+                percent_off = order.discount,
+                duration = 'once', # 1회성 사용임
+            )
+            # 쿠폰을 결제 세션에 연결
+            session_data['discounts'] = [{'coupon':stripe_coupon.id}]
+
         # create stripe checkout session
         session = stripe.checkout.Session.create(**session_data)
         return redirect(session.url, code =303)
-    return render(request, 'payment/process.html', locals())
+    return render(request, 'payment/process.html', {'order':order})
 
 def payment_completed(request):
     return render(request, 'payment/completed.html')

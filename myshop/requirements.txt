@@ -6,3 +6,7 @@ flower==1.2.0
 celery==5.2.7
 stripe==4.0.2
 WeasyPrint==56.1
+social-auth-app-django==5.2.0
+Werkzeug==2.3.6
+pyOpenSSL==23.1.1
+django-extensions==3.2.3

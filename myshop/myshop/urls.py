@@ -25,9 +25,15 @@ urlpatterns = [
     path('orders/',include('orders.urls', namespace='orders')),
     path('payment/', include('payment.urls', namespace='payment')),
     path('coupons/', include('coupons.urls', namespace = 'coupons')),
+    path('rosetta/', include('rosetta.urls')),
+    path('accounts/',include('aacount.urls')),
     path('', include('shop.urls', namespace = 'shop')),
 
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+urlpatterns += [
+    path('social-auth/', include('social_django.urls', namespace='social')),
+]

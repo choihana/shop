@@ -25,12 +25,16 @@ SECRET_KEY = 'django-insecure-c#7k5e_wb3cuhtm9yzarqc!7b!3s4v$(5s)s1g6$+x%$q&$ere
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'mysite.com','localhost', '127.0.0.1'
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
+    'social_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +46,9 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'coupons.apps.CouponsConfig',
+    'rosetta',
+    'aacount.apps.AacountConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -146,3 +153,17 @@ STRIPE_WEBHOOK_SECRET = 'whsec_fd5f641259cc39a07c3666227dc1d6c0c0dc09bde5f3e1fe3
 CELERY_TASK_ALWAYS_EAGER = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.naver.NaverOAuth2',
+]
+
+SOCIAL_AUTH_NAVER_KEY = 'JiARA_lKm_5xm9Sd9l4x'
+SOCIAL_AUTH_NAVER_SECRET = 'TXMPVDfEVC'
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True

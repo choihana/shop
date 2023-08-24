@@ -1,0 +1,16 @@
+<form method="POST">
+    {{form.as_p}}
+    {% csrf_token %}
+    <input type="submit" value="login">
+</form>
+
+<div class="d-grid">
+        <ul class="list-group list-group-flush d-flex">
+            <li class="list-group-item col-12 justify-content-end">
+                {#  소셜 로그인 네이버  #}
+                <a class="btn btn-success" href="{% url 'social:begin' 'naver' %}">
+                    Sign in with Naver
+                </a>
+            </li>
+        </ul>
+    </div>
